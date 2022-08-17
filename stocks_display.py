@@ -1,6 +1,5 @@
 import streamlit as st
 import stocks_data
-import random
 
 default_colors = ('#fbfb00', '#fb7c01', '#560056', '#00dcdc', '#02ff0f', '#ff0000', '#0101ff', '#fe6b00', '#EC8DB0', '#7d7c7c')
 st.set_page_config(layout='wide')
