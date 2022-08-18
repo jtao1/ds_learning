@@ -2,4 +2,7 @@ pandas
 numpy
 matplotlib
 datetime
+yfinance
+pathlib
+re
 streamlit
