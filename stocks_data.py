@@ -45,8 +45,6 @@ def multi_plot(symbol, mas, stock_color): #mas is a dictionary {ma_length:color}
 
     plt.subplots_adjust(left=0.05, right=.75, hspace=0)
     plt.xticks(rotation=30)
-    #plt.show()
-    print(ax)
     return fig
 
 def single_plot(symbol, mas, stock_color):
@@ -67,7 +65,6 @@ def single_plot(symbol, mas, stock_color):
     
     plt.subplots_adjust(left=0.05, right=.75, hspace=0)
     plt.xticks(rotation=30)
-    #plt.show()
     return fig
     
 def calculate_ma(ma_length, data):
@@ -80,5 +77,3 @@ def calculate_ma(ma_length, data):
     for i in range(ma_length, data.shape[0]):
         ma.append(((data.iloc[i, 4] - ma[i-ma_length-1]) * multiplier) + ma[i-ma_length-1])
     return ma
-
-#multi_plot(['A', ''], {2: '#fbfb00'}, '#fbfb00')

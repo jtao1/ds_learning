@@ -24,7 +24,6 @@ with st.sidebar:
         else:
             st.write('You can only input numbers followed by a comma (example: 5, 10)')
 
-
 spacer1, content, spacer2 = st.columns([1,6,1])
 with content:
     temp = []
@@ -47,6 +46,10 @@ with content:
         else:
             st.write('You can only input valid stock symbols')
     st.info('This can only be used for educational purposes.')
+
+
+
+    
     #TODO
     #add other technical indicators
     #using a stock symbol that does not exist
