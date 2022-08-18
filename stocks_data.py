@@ -16,10 +16,15 @@ def check_data(stocks):
         path = Path(fname)
         if path.is_file():
             data = pd.read_csv(fname)
+            if data.shape[0] == 0:
+                return False
             if data.iloc[data.shape[0]-1, 0] != dt.date.today: #will upade csv if it doesn't have today's closing price
                 get_data(stock, fname)
         else:
             get_data(stock, fname)
+            data = pd.read_csv(fname)
+            if data.shape[0] == 0:
+                return False
 
 def multi_plot(symbol, mas, stock_color): #mas is a dictionary {ma_length:color}
     plt.style.use('dark_background')
@@ -77,4 +82,4 @@ def calculate_ma(ma_length, data):
         ma.append(((data.iloc[i, 4] - ma[i-ma_length-1]) * multiplier) + ma[i-ma_length-1])
     return ma
 
-single_plot(['A'], {2: '#fbfb00'}, '#fbfb00')
+#multi_plot(['A', ''], {2: '#fbfb00'}, '#fbfb00')

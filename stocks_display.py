@@ -33,18 +33,20 @@ with content:
     if stocks_input == '' or stocks_input.isspace():
         st.write('You can only input valid stock symbols')
     else:
-        if re.match('^(([\sA-Z\s]+)[,]?)*$', stocks_input):
+        if re.match('^(([\sA-Z\s]{0,5})[,]?)*$', stocks_input):
             temp = stocks_input.split(',')
             for stock in temp:
                 stocks.append(stock.strip())
-            stocks_data.check_data(stocks)
-            if len(stocks) == 1:
-                st.pyplot(fig=stocks_data.single_plot(stocks, ma_input, stock_color))
+            if stocks_data.check_data(stocks) == False:
+                st.write('You can only input valid stock symbols')
             else:
-                st.pyplot(fig=stocks_data.multi_plot(stocks, ma_input, stock_color))
+                if len(stocks) == 1:
+                    st.pyplot(fig=stocks_data.single_plot(stocks, ma_input, stock_color))
+                else:
+                    st.pyplot(fig=stocks_data.multi_plot(stocks, ma_input, stock_color))
         else:
             st.write('You can only input valid stock symbols')
-
+    st.info('This can only be used for educational purposes.')
     #TODO
     #add other technical indicators
     #using a stock symbol that does not exist
