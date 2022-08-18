@@ -23,11 +23,10 @@ def check_data(stocks):
 
 def multi_plot(symbol, mas, stock_color): #mas is a dictionary {ma_length:color}
     plt.style.use('dark_background')
-    fig, ax = plt.subplots(len(symbol), 1)        
+    fig, ax = plt.subplots(nrows=len(symbol), ncols=1, )
     ax[0].set_title('Stock Prices')
     for i in range(len(symbol)):
         data = pd.read_csv(f'./Stock-Data/{symbol[i]}.csv')
-        #data = data.iloc[::-1].reset_index(drop=True)
         data['Date'] = pd.to_datetime(data['Date'])
         ax[i].set_xlim(data.iloc[0,0], data.iloc[data.shape[0]-1, 0])
         ax[i].plot(data['Date'], data['Close'], label='Close Price', color=stock_color)
@@ -38,12 +37,35 @@ def multi_plot(symbol, mas, stock_color): #mas is a dictionary {ma_length:color}
         if i == len(symbol)-1:
                 ax[i].set_xlabel('Dates')
                 ax[i].tick_params(labelbottom=True, labelsize=6)
-                ax[i].legend(bbox_to_anchor = (1.2, 3.15), fontsize=6)
+                ax[i].legend(bbox_to_anchor=(0, -0.05), fontsize=6)
 
     plt.subplots_adjust(left=0.05, right=.75, hspace=0)
     plt.xticks(rotation=30)
+    #plt.show()
+    print(ax)
     return fig
 
+def single_plot(symbol, mas, stock_color):
+    plt.style.use('dark_background')
+    fig, ax = plt.subplots(nrows=len(symbol), ncols=1, )
+    ax.set_title('Stock Prices')
+    data = pd.read_csv(f'./Stock-Data/{symbol[0]}.csv')
+    data['Date'] = pd.to_datetime(data['Date'])
+    ax.set_xlim(data.iloc[0,0], data.iloc[data.shape[0]-1, 0])
+    ax.plot(data['Date'], data['Close'], label='Close Price', color=stock_color)
+    ax.tick_params(labelbottom=False, labelsize=6)
+    for ma in mas:  
+        ax.plot(data.iloc[ma-1:, 0], calculate_ma(ma, data), label=f'{ma} Day EMA', color=mas[ma])  
+    ax.set_ylabel(symbol[0])
+    ax.set_xlabel('Dates')
+    ax.tick_params(labelbottom=True, labelsize=6)
+    ax.legend(bbox_to_anchor=(0, 0), fontsize=6)
+    
+    plt.subplots_adjust(left=0.05, right=.75, hspace=0)
+    plt.xticks(rotation=30)
+    #plt.show()
+    return fig
+    
 def calculate_ma(ma_length, data):
     #to calculate ema: ignore first ma_length days, for ma_length+1 day take average of the previous ma_length days
     #for the day our equation: (((close - prev ema) * multiplier) + prev ema)
@@ -54,3 +76,5 @@ def calculate_ma(ma_length, data):
     for i in range(ma_length, data.shape[0]):
         ma.append(((data.iloc[i, 4] - ma[i-ma_length-1]) * multiplier) + ma[i-ma_length-1])
     return ma
+
+single_plot(['A'], {2: '#fbfb00'}, '#fbfb00')
