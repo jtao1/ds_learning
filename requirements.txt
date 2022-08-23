@@ -5,5 +5,5 @@ datetime
 yfinance
 pathlib
 google-cloud-storage==2.5.0
-google.oauth2
+google-oauth2
 streamlit
