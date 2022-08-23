@@ -51,7 +51,6 @@ with content:
 
 
 
-
     #TODO
     #add other technical indicators
     #using a stock symbol that does not exist
