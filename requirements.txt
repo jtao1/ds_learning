@@ -4,4 +4,6 @@ matplotlib
 datetime
 yfinance
 pathlib
+google-cloud-storage
+google.oauth2
 streamlit

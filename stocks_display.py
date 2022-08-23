@@ -9,7 +9,7 @@ with st.sidebar:
     options_input = st.text_input('Enter the different lengths of EMA, (example: 5, 10)', value='5, 10')
     stock_color = st.color_picker('Enter a color for the stock close price', value='#8EA08F')
     if options_input == '' or options_input.isspace():
-        st.write('Current not using any EMAs')
+        st.error('Currently not using any EMAs')
     else:
         if re.match('^(([\s0-9\s]+)[,]?)*$', options_input):
             if options_input[-1] == ',':
@@ -20,36 +20,38 @@ with st.sidebar:
                     color_input = st.color_picker(f'Choose a color for the {options[i]} EMA', value=default_colors[i])
                     ma_input.update({int(options[i].strip()):color_input})
             else:
-                st.write('You can only have up to 10 EMA.')
+                st.error('You can only have up to 10 EMA.')
         else:
-            st.write('You can only input numbers followed by a comma (example: 5, 10)')
+            st.error('You can only input numbers followed by a comma (example: 5, 10)')
 
-spacer1, content, spacer2 = st.columns([1,6,1])
+spacer1, content, spacer2 = st.columns([1,5,1])
 with content:
     temp = []
     stocks = []
     stocks_input = st.text_input('Enter the stock(s) symbol you would like to see (example: SPY, AMD, TCEHY)', value='SPY, AMD, TCEHY')
     if stocks_input == '' or stocks_input.isspace():
-        st.write('You can only input valid stock symbols')
+        st.error('You can only input valid stock symbols')
     else:
         if re.match('^(([\sA-Z\s]{0,5})[,]?)*$', stocks_input):
             temp = stocks_input.split(',')
+            #condense!!!!
+            stocks = []
             for stock in temp:
                 stocks.append(stock.strip())
-            if stocks_data.check_data(stocks) == False:
-                st.write('You can only input valid stock symbols')
-            else:
+            try:
                 if len(stocks) == 1:
                     st.pyplot(fig=stocks_data.single_plot(stocks, ma_input, stock_color))
                 else:
                     st.pyplot(fig=stocks_data.multi_plot(stocks, ma_input, stock_color))
+            except Exception:
+                st.error('Invalid Stock Error')
         else:
-            st.write('You can only input valid stock symbols')
+            st.error('You can only input valid stock symbols')
     st.info('This can only be used for educational purposes.')
 
 
 
-    
+
     #TODO
     #add other technical indicators
     #using a stock symbol that does not exist
