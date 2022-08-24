@@ -34,6 +34,8 @@ with content:
     else:
         if re.match('^(([\saA-zZ\s]*)[,]?)*$', stocks_input):
             temp = stocks_input.split(',')
+            if temp[-1] == ',':
+                temp = temp[0:len(temp)-1]
             #condense!!!!
             try:
                 for stock in temp:
