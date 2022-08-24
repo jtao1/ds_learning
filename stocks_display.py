@@ -32,10 +32,10 @@ with content:
     if stocks_input == '' or stocks_input.isspace():
         st.error('You can only input valid stock symbols')
     else:
+        if stocks_input.strip()[-1] == ',':
+            stocks_input = stocks_input[0:len(stocks_input)]
         if re.match('^(([\saA-zZ\s]*)[,]?)*$', stocks_input):
             temp = stocks_input.split(',')
-            if temp[-1] == ',':
-                temp = temp[0:len(temp)-1]
             #condense!!!!
             try:
                 for stock in temp:
