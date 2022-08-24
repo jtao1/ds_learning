@@ -29,10 +29,11 @@ with content:
     temp = []
     stocks = []
     stocks_input = st.text_input('Enter the stock(s) symbol you would like to see (example: SPY, AMD, TCEHY)', value='SPY, AMD, TCEHY')
+    stocks_input = stocks_input.strip()
     if stocks_input == '' or stocks_input.isspace():
         st.error('You can only input valid stock symbols')
     else:
-        if stocks_input.strip()[-1] == ',':
+        if stocks_input[-1] == ',':
             stocks_input = stocks_input[0:len(stocks_input)]
         if re.match('^(([\saA-zZ\s]*)[,]?)*$', stocks_input):
             temp = stocks_input.split(',')
