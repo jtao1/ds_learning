@@ -32,12 +32,16 @@ with content:
     if stocks_input == '' or stocks_input.isspace():
         st.error('You can only input valid stock symbols')
     else:
-        if re.match('^(([\sA-Z\s]{0,5})[,]?)*$', stocks_input):
+        if re.match('^(([\saA-zZ\s]*)[,]?)*$', stocks_input):
             temp = stocks_input.split(',')
             #condense!!!!
-            stocks = []
-            for stock in temp:
-                stocks.append(stock.strip())
+            try:
+                for stock in temp:
+                    if len(stock) > 6:
+                        raise Exception
+                    stocks.append(stock.strip())
+            except Exception:
+                st.error('Invalid Stock Error')
             try:
                 if len(stocks) == 1:
                     st.pyplot(fig=stocks_data.single_plot(stocks, ma_input, stock_color))
