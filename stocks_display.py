@@ -25,9 +25,8 @@ with st.sidebar:
                     st.error('You can only have up to 10 EMA.')
             else:
                 st.error('You can only input numbers followed by a comma (example: 5, 10)')
-        st.info('Leave the ')
-    with st.expander('RSI Customization Options'):
-        rsi_input = st.text_input('Enter RSI')
+    # with st.expander('RSI Customization Options'):
+    #     rsi_input = st.text_input('Enter RSI')
 spacer1, content, spacer2 = st.columns([1,5,1])
 with content:
     temp = []

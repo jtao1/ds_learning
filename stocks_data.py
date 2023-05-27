@@ -130,6 +130,6 @@ def calculate_rsi(rsi_length, data):
             change['losses'].pop(0)
     return rsi
 
-stock = read_file('AMD')
+#stock = read_file('AMD')
 #print(len(calculate_rsi(14, stock)))
 #print(dt.date.today())
