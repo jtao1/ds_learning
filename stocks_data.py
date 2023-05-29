@@ -103,7 +103,7 @@ def calculate_ma(ema_length, data):
     multiplier = 2 / (ema_length+1) 
     ema.append(np.average(data.iloc[0:ema_length, 4]))
     for i in range(ema_length, data.shape[0]):
-        ema.append(((data.iloc[i, 4] - ema[i-ema_length-1]) * multiplier) + ema[i-ema_length-1])
+        ema.append(((data.iloc[i, 4] - ema[i-ema_length]) * multiplier) + ema[i-ema_length])
     return ema
 
 def calculate_rsi(rsi_length, data):
