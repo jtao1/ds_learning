@@ -1,16 +1,14 @@
 import pandas as pd
 import numpy as np
-import datetime as dt
 import yfinance as yf
-import streamlit as st
 from matplotlib import pyplot as plt, dates as mdates
-from pathlib import Path
 
 
 def read_file(stock):
     data = yf.Ticker(stock)
-    data = data.history('3mo')
+    data = data.history('6mo')
     data.reset_index(inplace=True)
+    data['Date'] = pd.to_datetime(data['Date'])
     return data
 
 def plot(symbol, emas, stock_color): #emas is a dictionary {ma_length:color}
@@ -20,17 +18,18 @@ def plot(symbol, emas, stock_color): #emas is a dictionary {ma_length:color}
     ax[0].set_title('Stock Prices')
     for i in range(len(symbol)):
         data = read_file(symbol[i])
-        data['Date'] = pd.to_datetime(data['Date'])
         ax[i].set_xlim(data.iloc[0,0], data.iloc[data.shape[0]-1, 0])
         ax[i].plot(data['Date'], data['Close'], label='Close Price', color=stock_color)
+        ax[i].xaxis.set_major_formatter(mdates.DateFormatter('%b'))        
+        ax[i].grid(True, color='#414242')
         ax[i].tick_params(labelbottom=False, labelsize=6)
         for ema in emas:  
             ax[i].plot(data.iloc[ema-1:, 0], calculate_ma(ema, data), label=f'{ema} Day EMA', color=emas[ema])        
         ax[i].set_ylabel(symbol[i])
-        if i == len(symbol)-1:
-                ax[i].set_xlabel('Dates')
-                ax[i].tick_params(labelbottom=True, labelsize=6)
-                ax[i].legend(bbox_to_anchor=(0, -0.05), fontsize=6)
+    last = len(symbol)-1
+    ax[last].set_xlabel('Dates')
+    ax[last].tick_params(labelbottom=True, labelsize=6)
+    ax[last].legend(bbox_to_anchor=(0, -0.05), fontsize=6)
     plt.subplots_adjust(left=0.05, right=.75, hspace=0)
     plt.xticks(rotation=30)
     return fig
@@ -69,7 +68,3 @@ def calculate_rsi(rsi_length, data):
             change['gains'].pop(0)
             change['losses'].pop(0)
     return rsi
-
-#stock = read_file('AMD')
-#print(len(calculate_rsi(14, stock)))
-#print(dt.date.today())
