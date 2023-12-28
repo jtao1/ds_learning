@@ -47,18 +47,20 @@ with content:
                         stocks.append(stock.strip().upper())
             except Exception:
                 st.error('Invalid Stock Error')
-            try:
-                if len(stocks) == 1:
-                    st.pyplot(fig=stocks_data.single_plot(stocks, ema_input, stock_color))
-                else:
-                    st.pyplot(fig=stocks_data.multi_plot(stocks, ema_input, stock_color))
-            except Exception:
-                st.error('Invalid Stock Error')
+            st.pyplot(fig=stocks_data.plot(stocks, ema_input, stock_color))
+
+            # try:
+            #     if len(stocks) == 1:
+            #         st.pyplot(fig=stocks_data.multi_plot(stocks, ema_input, stock_color))
+            #         print()
+            #     else:
+            #         st.pyplot(fig=stocks_data.multi_plot(stocks, ema_input, stock_color))
+            # except Exception:
+            #     st.error('Invalid Stock Error')
         else:
             st.error('You can only input valid stock symbols')
     st.info('This can only be used for educational purposes.')
 
     #TODO
     #add other technical indicators
-    #reformat code in stocks_display single/multi plot very messy and can broken up into different functions 
     #adding a display for each stock tab, like volume and other info
