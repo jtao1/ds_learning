@@ -1,9 +1,6 @@
 pandas
 numpy
 matplotlib
-datetime
 yfinance
-pathlib
-google-cloud-storage==2.5.0
-google-auth
 streamlit 
+re
