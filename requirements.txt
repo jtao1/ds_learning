@@ -3,4 +3,3 @@ numpy
 matplotlib
 yfinance
 streamlit 
-re
